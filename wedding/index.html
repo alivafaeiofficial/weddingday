@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>یاسمین و عباس</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000; /* تغییر رنگ پس‌زمینه به سیاه */
+        }
+
+        .full-screen-image {
+            background-image: url('img/weddingdayweb.png');
+            background-size: contain;
+            background-position: top center;
+            background-repeat: no-repeat;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .mute-button {
+            width: 100%; /* تنظیم اندازه به عرض کامل صفحه */
+            padding: 15px;
+            background-color: #ff5a5f; /* رنگ دکمه */
+            color: white;
+            border: none;
+            font-size: 18px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px; /* فاصله از تصویر بالا */
+            transition: background-color 0.3s;
+            border-radius: 0; /* حذف گردی گوشه‌ها */
+        }
+
+        .mute-button:hover {
+            background-color: #ff2a2d; /* تغییر رنگ دکمه هنگام هاور */
+        }
+
+        audio {
+            display: none; /* پنهان کردن پلیر صوتی */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- تصویر به عنوان پس‌زمینه -->
+    <div class="full-screen-image"></div>
+
+    <!-- موزیک به صورت استریمینگ پخش می‌شود -->
+    <audio id="bg-music" preload="none" loop>
+        <source src="Music/AroosoDomad.mp3" type="audio/mpeg">
+        مرورگر شما از پخش فایل‌های صوتی پشتیبانی نمی‌کند.
+    </audio>
+
+    <!-- دکمه برای پخش و قطع و وصل صدا -->
+    <button class="mute-button" id="mute-btn" onclick="playMusic()">شادش کنیم</button>
+
+    <script>
+        // دسترسی به پلیر صوتی
+        var audio = document.getElementById("bg-music");
+        var muteBtn = document.getElementById("mute-btn");
+
+        // تابع شروع پخش موسیقی
+        function playMusic() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    muteBtn.textContent = "قطع صدا";
+                    muteBtn.onclick = toggleMute; // بعد از شروع پخش، به میوت تغییر دهید
+                }).catch((error) => {
+                    console.error("Error playing the audio:", error);
+                });
+            }
+        }
+
+        // تابع قطع و وصل صدا
+        function toggleMute() {
+            if (audio.muted) {
+                audio.muted = false;
+                muteBtn.textContent = "قطع صدا";
+            } else {
+                audio.muted = true;
+                muteBtn.textContent = "پخش صدا";
+            }
+        }
+    </script>
+
+</body>
+</html>
